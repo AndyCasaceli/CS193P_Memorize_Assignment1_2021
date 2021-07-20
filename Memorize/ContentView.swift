@@ -58,7 +58,7 @@ struct ContentView: View {
                 })
             }
             .font(.largeTitle)
-            //.padding()
+            .padding(.horizontal)
         }
         .foregroundColor(EmojiMemoryGame.currentTheme.getColor())
     }
