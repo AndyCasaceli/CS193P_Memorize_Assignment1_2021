@@ -11,22 +11,58 @@ struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(viewModel.cards) { card in
-                    CardView(card: card)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture {
-                            viewModel.choose(card)
-                        }
+        VStack() {
+            Text("Memorize!")
+                .font(.largeTitle)
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+                    ForEach(viewModel.cards) { card in
+                        CardView(card: card)
+                            .aspectRatio(2/3, contentMode: .fit)
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
+                    }
                 }
             }
+            .padding(.horizontal)
+            HStack(alignment: .center) {
+                Button(action: {
+                    viewModel.changeTheme(to: .animals)
+                }, label: {
+                    VStack {
+                        Image(systemName: "hare")
+                        Text("Animals")
+                            .font(.title)
+                    }
+                })
+                Spacer()
+                Button(action: {
+                    viewModel.changeTheme(to: .vehicles)
+                }, label: {
+                    VStack {
+                        Image(systemName: "car")
+                        Text("Vehicles")
+                            .font(.title)
+                    }
+                })
+                Spacer()
+                Button(action: {
+                    viewModel.changeTheme(to: .flags)
+                }, label: {
+                    VStack {
+                        Image(systemName: "flag")
+                        Text("Flags")
+                            .font(.title)
+                    }
+                })
+            }
+            .font(.largeTitle)
+            //.padding()
         }
-        .foregroundColor(.red)
-        .padding(.horizontal)
+        .foregroundColor(EmojiMemoryGame.currentTheme.getColor())
     }
 }
-
 
 struct CardView: View {
     let card: MemoryGame<String>.Card
